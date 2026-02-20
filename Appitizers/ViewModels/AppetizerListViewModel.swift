@@ -17,7 +17,6 @@ final class AppetizerListViewModel: ObservableObject {
         isLoading = true
         NetworkManager.shared.getAppetizers { result in
             //forces network command to run on main thread
-            // commit
             DispatchQueue.main.async {
                 self.isLoading = false
                 switch result {
