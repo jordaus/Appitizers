@@ -12,6 +12,8 @@ struct AppetizerListCellView: View {
     let appetizer: Appetizer
     var body: some View {
         HStack {
+            //used for RemoteImage implementation, but the API is outdated
+            //AppetizerRemoteImage(urlString: appetizer.imageURL)
             Image(appetizer.imageURL)
                 .resizable()
                 .aspectRatio(contentMode: .fit)

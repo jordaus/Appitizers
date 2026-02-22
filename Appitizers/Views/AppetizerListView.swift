@@ -11,18 +11,29 @@ import PhotosUI
 struct AppetizerListView: View {
     
     @StateObject var viewModel = AppetizerListViewModel()
+    
 
     var body: some View {
         ZStack {
             NavigationStack{
                 List(viewModel.appetizers) { appetizer in
                     AppetizerListCellView(appetizer: appetizer)
+                        .onTapGesture {
+                            viewModel.selectedAppetizer = appetizer
+                            viewModel.isShowingDetailView = true
+                        }
                         .padding(.leading)
                 }
                 .navigationTitle("Appetizers")
+                .disabled(viewModel.isShowingDetailView)
             }
             .onAppear {
                 viewModel.getAppetizers()
+            }
+            .blur(radius: viewModel.isShowingDetailView ? 20 : 0)
+            
+            if viewModel.isShowingDetailView {
+                AppetizerCardView(appetizer: viewModel.selectedAppetizer!, isShowingDetailView: $viewModel.isShowingDetailView)
             }
             if viewModel.isLoading {
                 LoadingView()
